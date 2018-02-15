@@ -54,7 +54,7 @@ router.get('/matches/:tournamentId/:seasonId', (req, res) => {
 });
 
 /**
-* @api {get} /rounds/:tournamentId/:seasonId/:round Get all rounds for a given tournament and season
+* @api {get} /rounds/:tournamentId/:seasonId/ Get all rounds for a given tournament and season
 * @apiName GetRounds
 * @apiGroup Matches
 *
@@ -68,6 +68,26 @@ router.get('/rounds/:tournamentId/:seasonId', (req, res) => {
 		.then((data) => {
 			res.json(data.data);
 		}).catch((err) => {
+			res.json({
+				error: `Could not get rounds for ${url}`,
+				errorMessage: err
+			});
+		});
+});
+
+/**
+* @api {get} /rounds/:roundId Get all rounds for a given id
+* @apiName GetRoundsPerRoundId
+* @apiGroup Matches
+*
+* @apiParam {Number} roundId
+*/
+router.get('/rounds/:roundId', (req, res) => {
+	const { roundId } = req.params;
+	const url = `${constants.SPECIFIC_ROUND_URL(roundId)}?start=${constants.START_LIMIT}&max=${constants.MAX_LIMIT}`;
+	axios.get(url)
+		.then(data => res.json(data.data))
+		.catch((err) => {
 			res.json({
 				error: `Could not get rounds for ${url}`,
 				errorMessage: err
