@@ -4,7 +4,7 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --exec node ./bin/www",
+    "start": "nodemon --exec babel-node ./bin/www",
     "test": "mocha --recursive test",
     "test:coverage": "nyc npm test",
     "test:unit": "mocha --recursive test/middleware test/models test/routes",
@@ -20,21 +20,23 @@
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "chai": "^3.5.0",
     "debug": "^2.2.0",
     "grunt": "^1.0.1",
-    "grunt-develop": "^0.4.0",
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
-    "request": "^2.60.0",
-    "time-grunt": "^1.2.1",
+    "grunt-develop": "^0.4.0",
     "load-grunt-tasks": "^3.2.0",
     "mocha": "^4.0.1",
     "nyc": "^10.0.0",
-    "supertest": "^2.0.0"
+    "request": "^2.60.0",
+    "supertest": "^2.0.0",
+    "time-grunt": "^1.2.1"
   },
   "apidoc": {
     "title": "Faresonen API Documentation",
-    "url" : ""
+    "url": ""
   }
 }
