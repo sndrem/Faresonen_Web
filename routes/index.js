@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 */
 router.get('/table/:tournamentId/:seasonId', (req, res) => {
 	const { tournamentId, seasonId } = req.params;
-	const url = `${constants.TABLE_URL}?start=0&max=38&tournamentId=${tournamentId}&seasonId=${seasonId}`;
+	const url = `${constants.TABLE_URL}?start=${constants.START_LIMIT}&max=${constants.MAX_LIMIT}&tournamentId=${tournamentId}&seasonId=${seasonId}`;
 	axios.get(url)
 		.then((data) => {
 			res.json(data.data);
@@ -44,8 +44,13 @@ router.get('/table/:tournamentId/:seasonId', (req, res) => {
 */
 router.get('/matches/:tournamentId/:seasonId', (req, res) => {
 	const { tournamentId, seasonId } = req.params;
-	const url = `${constants.MATCHES_URL}?start=0&max=1000&tournamentId=${tournamentId}&seasonId=${seasonId}`;
-	axios.get(url).then(data => res.json(data.data)).catch(err => res.json({ error: `Could not get matches for ${url}`, errorMessage: err }));
+	const url = `${constants.MATCHES_URL}?start=${constants.START_LIMIT}&max=${constants.MAX_LIMIT}&tournamentId=${tournamentId}&seasonId=${seasonId}`;
+	axios.get(url)
+		.then((data) => {
+			res.json(data.data);
+		}).catch((err) => {
+			res.json({ error: `Could not get matches for ${url}`, errorMessage: err });
+		});
 });
 
 /**
@@ -58,8 +63,40 @@ router.get('/matches/:tournamentId/:seasonId', (req, res) => {
 */
 router.get('/rounds/:tournamentId/:seasonId', (req, res) => {
 	const { tournamentId, seasonId } = req.params;
-	const url = `${constants.ROUNDS_URL}?start=0&max=1000&tournamentId=${tournamentId}&seasonId=${seasonId}`;
-	axios.get(url).then(data => res.json(data.data)).catch(err => res.json({ error: `Could not get rounds for ${url}`, errorMessage: err }));
+	const url = `${constants.ROUNDS_URL}?start=${constants.START_LIMIT}&max=${constants.MAX_LIMIT}&tournamentId=${tournamentId}&seasonId=${seasonId}`;
+	axios.get(url)
+		.then((data) => {
+			res.json(data.data);
+		}).catch((err) => {
+			res.json({
+				error: `Could not get rounds for ${url}`,
+				errorMessage: err
+			});
+		});
+});
+
+/**
+* @api {get} /players/:tournamentId/:seasonId/:teamId Get all player for a team
+* @apiName GetPlayers
+* @apiGroup Players
+*
+* @apiParam {Number} tournamentId (e.g 230 for Premier League)
+* @apiParam {Number} seasonId (e.g 339 for Premier League in the season of 17/18)
+* @apiParam {Number} teamId (e.g 740 for Tottenham)
+*/
+router.get('/players/:tournamentId/:seasonId/:teamId', (req, res) => {
+	const { tournamentId, seasonId, teamId } = req.params;
+	const url = `${constants.PLAYERS_URL}?tournamentId=${tournamentId}&seasonId=${seasonId}&teamId=${teamId}&start=${constants.START_LIMIT}&max=${constants.MAX_LIMIT}`;
+	axios.get(url)
+		.then((data) => {
+			res.json(data.data);
+		})
+		.catch((err) => {
+			res.json({
+				error: `Could not get players for url ${url}`,
+				errorMessage: err
+			});
+		});
 });
 
 module.exports = router;
