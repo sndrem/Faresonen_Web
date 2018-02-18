@@ -125,6 +125,10 @@ router.get('/players/:tournamentId/:seasonId/:teamId', (req, res) => {
 router.get('/statistics/yellowcards/:tournamentId', altomfotballScraper.getYellowCards, (req, res) => {
 	// console.log(res.players);
 	res.json({ 'data': res.players });
-})
+});
+
+router.get('/statistics/topscorers/:tournamentId', altomfotballScraper.getTopScorers, (req, res) => {
+	res.json({ 'data': res.players });
+});
 
 module.exports = router;

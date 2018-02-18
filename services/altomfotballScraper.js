@@ -4,42 +4,64 @@ const constants = require('../constants/constants').default;
 
 const scraper = {
 	getYellowCards(req, res, next) {
-		const { tournamentId } = req.params;
-		if (isNaN(tournamentId)) {
-			throw new Error('TournamentId is not valid. Must be a number');
-		}
-
-		request.get(`${constants.YELLOW_CARD_STATISTICS}${tournamentId}`, (err, response, html) => {
-			if (err) {
-				res.error = `Could not get yellow cards for ${tournamentId}`;
-			}
-
-			const $ = cheerio.load(html);
-			const players = [];
-			$('table tbody tr').each((i, elem) => {
-				const playerData = $(elem);
-				const place = parseInt($(elem).children('td').eq(0).text().replace('.', ""));
-				const name = $(elem).children('td').eq(1).find('a').eq(0).text();
-				const team = $(elem).children('td').eq(2).find('a').eq(0).text();
-				const yellowCards = parseInt($(elem).children('td').eq(3).text());
-				const matches = parseInt($(elem).children('td').eq(4).text());
-				const average = parseFloat($(elem).children('td').eq(5).text());
-				const playerDataList = [];
-
-				players.push({
-					place,
-					name,
-					team,
-					yellowCards,
-					matches,
-					average
-				});
-			});
-			res.players = players;
-
+		getStatistics(constants.YELLOW_CARD_STATISTICS, req.params.tournamentId).then((data) => {
+			res.players = data;
 			next();
+		}).catch((err) => {
+			throw new Error(err);
+		});
+	},
+
+	getTopScorers(req, res, next) {
+		getStatistics(constants.TOPSCORER_STATISTICS, req.params.tournamentId).then((data) => {
+			res.players = data;
+			next();
+		}).catch((err) => {
+			throw new Error(err);
 		});
 	}
 };
+
+function getStatistics(url, tournamentId) {
+	return new Promise((resolve, reject) => {
+		if (isNaN(tournamentId)) {
+			reject('TournamentId is not valid. Must be a number');
+	}
+
+	request.get(`${url}${tournamentId}`, (err, response, html) => {
+		if (err) {
+			res.error = `Could not get statistics for url: ${url} with tournament ID: ${tournamentId}`;
+		}
+		const $ = cheerio.load(html);
+		const players = [];
+		$('table tbody tr').each((i, elem) => {
+			const playerData = extractValues(elem, $);
+			console.log(playerData);
+			players.push(playerData);
+		});
+			resolve(players);
+		});	
+	});
+		
+}
+
+function extractValues(tablerow, html) {
+	const playerData = html(tablerow);
+	const place = parseInt(html(tablerow).children('td').eq(0).text().replace('.', ''));
+	const name = html(tablerow).children('td').eq(1).find('a').eq(0).text();
+	const team = html(tablerow).children('td').eq(2).find('a').eq(0).text();
+	const yellowCards = parseInt(html(tablerow).children('td').eq(3).text(), 10);
+	const matches = parseInt(html(tablerow).children('td').eq(4).text(), 10);
+	const average = parseFloat(html(tablerow).children('td').eq(5).text().replace(',', '.'));
+
+	return {
+		place,
+		name,
+		team,
+		yellowCards,
+		matches,
+		average		
+	}
+}
 
 export default scraper;

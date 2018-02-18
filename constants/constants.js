@@ -6,7 +6,8 @@ const constants = {
 	ROUNDS_URL: 'http://api.tv2.no/sport/resources/rounds',
 	SPECIFIC_ROUND_URL (id) { return `http://api.tv2.no/sport/resources/rounds/${id}/matches/`; },
 	PLAYERS_URL: 'http://api.tv2.no/sport/resources/people',
-	YELLOW_CARD_STATISTICS: 'http://www.altomfotball.no/elementsCommonAjax.do?cmd=statistics&subCmd=yellowCards&tournamentId='
+	YELLOW_CARD_STATISTICS: 'http://www.altomfotball.no/elementsCommonAjax.do?cmd=statistics&subCmd=yellowCards&tournamentId=',
+	TOPSCORER_STATISTICS: 'http://www.altomfotball.no/elementsCommonAjax.do?cmd=statistics&subCmd=goals&tournamentId='
 };
 
 export default constants;
