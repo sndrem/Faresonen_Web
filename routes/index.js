@@ -4,6 +4,8 @@ const axios = require('axios');
 
 const constants = require('../constants/constants.js').default;
 
+const altomfotballScraper = require('../services/altomfotballScraper').default;
+
 const router = express.Router();
 
 /* GET home page. */
@@ -118,5 +120,11 @@ router.get('/players/:tournamentId/:seasonId/:teamId', (req, res) => {
 			});
 		});
 });
+
+// TODO document route
+router.get('/statistics/yellowcards/:tournamentId', altomfotballScraper.getYellowCards, (req, res) => {
+	// console.log(res.players);
+	res.json({ 'data': res.players });
+})
 
 module.exports = router;
