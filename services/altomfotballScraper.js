@@ -22,7 +22,7 @@ const scraper = {
 	}
 };
 
-function getStatistics(url, tournamentId) {
+function getStatistics(url, tournamentId, keys) {
 	return new Promise((resolve, reject) => {
 		if (isNaN(tournamentId)) {
 			reject('TournamentId is not valid. Must be a number');
@@ -36,7 +36,6 @@ function getStatistics(url, tournamentId) {
 		const players = [];
 		$('table tbody tr').each((i, elem) => {
 			const playerData = extractValues(elem, $);
-			console.log(playerData);
 			players.push(playerData);
 		});
 			resolve(players);
@@ -50,17 +49,17 @@ function extractValues(tablerow, html) {
 	const place = parseInt(html(tablerow).children('td').eq(0).text().replace('.', ''));
 	const name = html(tablerow).children('td').eq(1).find('a').eq(0).text();
 	const team = html(tablerow).children('td').eq(2).find('a').eq(0).text();
-	const yellowCards = parseInt(html(tablerow).children('td').eq(3).text(), 10);
-	const matches = parseInt(html(tablerow).children('td').eq(4).text(), 10);
-	const average = parseFloat(html(tablerow).children('td').eq(5).text().replace(',', '.'));
+	const value1 = parseInt(html(tablerow).children('td').eq(3).text(), 10);
+	const value2 = parseInt(html(tablerow).children('td').eq(4).text(), 10);
+	const value3 = parseFloat(html(tablerow).children('td').eq(5).text().replace(',', '.'));
 
 	return {
 		place,
 		name,
 		team,
-		yellowCards,
-		matches,
-		average		
+		value1,
+		value2,
+		value3		
 	}
 }
 
