@@ -13,6 +13,14 @@ router.get("/", (req, res) => {
 	res.render("index", { title: "Express" });
 });
 
+// router.get("/*", (req, res) => {
+// 	res.sendFile(path.join(__dirname), "build/index.html", err => {
+// 		if (err) {
+// 			res.status(500).send(err);
+// 		}
+// 	});
+// });
+
 /**
  * @api {get} /table/:tournamentId/:seasonId Get table for a given tournament and season
  * @apiName GetTable
