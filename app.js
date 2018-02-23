@@ -18,7 +18,7 @@ app.use(express.static(__dirname + "/build"));
 // view engine setup
 
 app.set("views", path.join(__dirname, "build"));
-app.set("view engine", "html");
+app.set("view engine", "jade");
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger("dev"));
