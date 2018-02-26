@@ -182,4 +182,12 @@ router.get(
 	}
 );
 
+router.get(
+	"/statistics/allDangerzonePlayers",
+	altomfotballScraper.getAllDangerzonePlayers,
+	(req, res) => {
+		res.json(res.players);
+	}
+);
+
 module.exports = router;
