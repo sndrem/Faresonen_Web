@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-import axios from "axios";
-import altomfotballScraper from "../services/altomfotballScraper";
 import app from "../app";
+import SocketFeeder from "../services/SocketFeeder";
 
 const http = require("http").Server(app);
 
@@ -11,15 +10,5 @@ const server = app.listen(app.get("port"), () => {
   console.log(`Express server listening on port ${server.address().port}`);
 });
 
-const io = require("socket.io")(server);
-
-io.on("connection", socket => {
-  console.log("A new user connected");
-});
-
-setInterval(() => {
-  // altomfotballScraper.getAllDangerzonePlayersForSockets(data => {
-  //   io.emit("data", data);
-  // });
-  io.emit("data", { title: "Hello World" });
-}, 10000);
+const feeder = new SocketFeeder(server);
+// feeder.startFeed();
