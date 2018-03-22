@@ -78,7 +78,6 @@ function getStatistics(url, tournamentId) {
 }
 
 function isInDangerzone(player) {
-  // TODO Remove !== 0 to === 0
   return player.value1 > 0 && player.value1 % 2 !== 0;
 }
 
@@ -132,6 +131,30 @@ const scraper = {
           obosligaen: []
         };
         next();
+      });
+  },
+
+  getAllDangerzonePlayersForSockets(cb) {
+    const urls = [
+      getStatistics(constants.YELLOW_CARD_STATISTICS, 1),
+      getStatistics(constants.YELLOW_CARD_STATISTICS, 2)
+    ];
+
+    return axios
+      .all(urls)
+      .then(
+        axios.spread((eliteserien, obosligaen) => {
+          cb({
+            eliteserien: filterDangerzonePlayers(eliteserien),
+            obosligaen: filterDangerzonePlayers(obosligaen)
+          });
+        })
+      )
+      .catch(err => {
+        cb({
+          eliteserien: [],
+          obosligaen: []
+        });
       });
   }
 };

@@ -13,7 +13,7 @@ const env = process.env.NODE_ENV || "development";
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == "development"; // eslint-disable-line eqeqeq
 
-app.use(express.static(__dirname + "/build"));
+app.use(express.static(path.join(__dirname, "/build")));
 
 // view engine setup
 
@@ -24,9 +24,9 @@ app.set("view engine", "jade");
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(
-	bodyParser.urlencoded({
-		extended: true
-	})
+  bodyParser.urlencoded({
+    extended: true
+  })
 );
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
@@ -35,9 +35,9 @@ app.use("/", routes);
 
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {
-	const err = new Error("Not Found");
-	err.status = 404;
-	next(err);
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
 });
 
 // / error handlers
@@ -45,27 +45,27 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (app.get("env") === "development") {
-	app.use((err, req, res, next) => {
-		//  eslint-disable-line no-unused-vars
-		res.status(err.status || 500);
-		res.render("error", {
-			message: err.message,
-			error: err,
-			title: "error"
-		});
-	});
+  app.use((err, req, res, next) => {
+    //  eslint-disable-line no-unused-vars
+    res.status(err.status || 500);
+    res.render("error", {
+      message: err.message,
+      error: err,
+      title: "error"
+    });
+  });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use((err, req, res, next) => {
-	//   eslint-disable-line no-unused-vars
-	res.status(err.status || 500);
-	res.render("error", {
-		message: err.message,
-		error: {},
-		title: "error"
-	});
+  //   eslint-disable-line no-unused-vars
+  res.status(err.status || 500);
+  res.render("error", {
+    message: err.message,
+    error: {},
+    title: "error"
+  });
 });
 
 module.exports = app;
