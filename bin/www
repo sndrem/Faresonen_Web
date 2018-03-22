@@ -11,4 +11,4 @@ const server = app.listen(app.get("port"), () => {
 });
 
 const feeder = new SocketFeeder(server);
-// feeder.startFeed();
+feeder.startFeed();
