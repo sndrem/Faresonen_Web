@@ -186,6 +186,14 @@ class SocketFeeder {
         });
     }, 10000);
   }
+
+  startTestFeed() {
+    const data = altomfotballScraper.getTestEvents();
+    setInterval(() => {
+      console.log("Emitting test data");
+      this.io.emit("data", { events: data });
+    }, 5000);
+  }
 }
 
 export default SocketFeeder;
