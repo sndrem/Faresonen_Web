@@ -6,6 +6,7 @@ class SocketFeeder {
   constructor(server) {
     console.log("Setting up socket-feeder");
     this.io = io(server);
+    this.sendData();
   }
 
   connection() {
@@ -15,329 +16,158 @@ class SocketFeeder {
   }
 
   sendData() {
+    const testData = {
+      events: {
+        "-uri": "http://api.tv2.no/sport/resources/events/",
+        event: [
+          {
+            "-uri": "http://api.tv2.no/sport/resources/events/15221417/",
+            eventtype: {
+              "-uri": "http://api.tv2.no/sport/resources/eventtypes/2/"
+            },
+            eventtime: "41",
+            extendedeventtype: {
+              "-uri":
+                "http://api.tv2.no/sport/resources/extendedeventtypes/1200/"
+            },
+            goalsTeamA: "1",
+            goalsTeamB: "0",
+            id: "15221417",
+            match: {
+              "-uri": "http://api.tv2.no/sport/resources/matches/912485/"
+            },
+            person1: {
+              "-uri": "http://api.tv2.no/sport/resources/people/345617/"
+            },
+            realTime: "2018-03-18T18:46:57+01:00",
+            team: {
+              "-uri": "http://api.tv2.no/sport/resources/teams/307/"
+            }
+          },
+          {
+            "-uri": "http://api.tv2.no/sport/resources/events/15222082/",
+            enetpulseId: "5491684",
+            eventMin: "84",
+            eventtype: {
+              "-uri": "http://api.tv2.no/sport/resources/eventtypes/2/"
+            },
+            eventtime: "84",
+            extendedeventtype: {
+              "-uri":
+                "http://api.tv2.no/sport/resources/extendedeventtypes/1200/"
+            },
+            goalsTeamA: "2",
+            goalsTeamB: "0",
+            id: "15222082",
+            match: {
+              "-uri": "http://api.tv2.no/sport/resources/matches/912485/"
+            },
+            nifsId: "8630875",
+            person1: {
+              "-uri": "http://api.tv2.no/sport/resources/people/207243/"
+            },
+            realTime: "2018-03-18T19:50:24+01:00",
+            team: {
+              "-uri": "http://api.tv2.no/sport/resources/teams/307/"
+            },
+            text: "Stopper en Brann-kontring. Riktig idømt."
+          },
+          {
+            "-uri": "http://api.tv2.no/sport/resources/events/15222085/",
+            eventtype: {
+              "-uri": "http://api.tv2.no/sport/resources/eventtypes/2/"
+            },
+            eventtime: "85",
+            extendedeventtype: {
+              "-uri":
+                "http://api.tv2.no/sport/resources/extendedeventtypes/1200/"
+            },
+            goalsTeamA: "0",
+            goalsTeamB: "1",
+            id: "15222085",
+            match: {
+              "-uri": "http://api.tv2.no/sport/resources/matches/912482/"
+            },
+            person1: {
+              "-uri": "http://api.tv2.no/sport/resources/people/279765/"
+            },
+            realTime: "2018-03-18T19:50:25+01:00",
+            team: {
+              "-uri": "http://api.tv2.no/sport/resources/teams/309/"
+            }
+          },
+          {
+            "-uri": "http://api.tv2.no/sport/resources/events/15222633/",
+            eventtype: {
+              "-uri": "http://api.tv2.no/sport/resources/eventtypes/2/"
+            },
+            eventtime: "36",
+            extendedeventtype: {
+              "-uri":
+                "http://api.tv2.no/sport/resources/extendedeventtypes/1200/"
+            },
+            goalsTeamA: "0",
+            goalsTeamB: "0",
+            id: "15222633",
+            match: {
+              "-uri": "http://api.tv2.no/sport/resources/matches/912487/"
+            },
+            nifsId: "8631283",
+            person1: {
+              "-uri": "http://api.tv2.no/sport/resources/people/194694/"
+            },
+            realTime: "2018-03-18T20:37:58+01:00",
+            team: {
+              "-uri": "http://api.tv2.no/sport/resources/teams/314/"
+            },
+            text:
+              "Alt for sent inne i en takling på Jone Samuelsen. Frispark til Odd i svært god posisjon."
+          },
+          {
+            "-uri": "http://api.tv2.no/sport/resources/events/15222908/",
+            eventtype: {
+              "-uri": "http://api.tv2.no/sport/resources/eventtypes/2/"
+            },
+            eventtime: "65",
+            extendedeventtype: {
+              "-uri":
+                "http://api.tv2.no/sport/resources/extendedeventtypes/1200/"
+            },
+            goalsTeamA: "2",
+            goalsTeamB: "1",
+            id: "15222908",
+            match: {
+              "-uri": "http://api.tv2.no/sport/resources/matches/912487/"
+            },
+            nifsId: "8631530",
+            person1: {
+              "-uri": "http://api.tv2.no/sport/resources/people/291489/"
+            },
+            realTime: "2018-03-18T21:24:57+01:00",
+            team: {
+              "-uri": "http://api.tv2.no/sport/resources/teams/314/"
+            }
+          }
+        ]
+      }
+    };
     this.io.emit("data", {
-      eliteserien: [
-        {
-          place: 1,
-          name: "Hugo Vegard Vetlesen",
-          team: "Stabæk",
-          value1: 1,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 20)
-        },
-        {
-          place: 2,
-          name: "Franck Boli",
-          team: "Stabæk",
-          value1: 2,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 18)
-        },
-        {
-          place: 3,
-          name: "Enric Vallés",
-          team: "Sandefjord",
-          value1: 2,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 4,
-          name: "Isaac Twum",
-          team: "Start",
-          value1: 1,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 5,
-          name: "Martin Ovenstad",
-          team: "Stabæk",
-          value1: 1,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 6,
-          name: "Tobias Christensen",
-          team: "Start",
-          value1: 1,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 7,
-          name: "Bent Sørmo",
-          team: "Kristiansund BK",
-          value1: 1,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 8,
-          name: "Christian Landu Landu",
-          team: "Tromsø",
-          value1: 1,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 9,
-          name: "John Hou Sæter",
-          team: "Stabæk",
-          value1: 2,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 10,
-          name: "Flamur Kastrati",
-          team: "Sandefjord",
-          value1: 1,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 11,
-          name: "Simen Wangberg",
-          team: "Tromsø",
-          value1: 1,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 12,
-          name: "Henrik Robstad",
-          team: "Start",
-          value1: 1,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 13,
-          name: "El-Hadji Gana Kane",
-          team: "Sandefjord",
-          value1: 1,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 14,
-          name: "Ifeanyi Mathew",
-          team: "Lillestrøm",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 15,
-          name: "Joachim Thomassen",
-          team: "Sarpsborg 08",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 16,
-          name: "Mathias Normann",
-          team: "Molde",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 17,
-          name: "José Ángel",
-          team: "Bodø/Glimt",
-          value1: 2,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 18,
-          name: "Jonatan Tollås Nation",
-          team: "Vålerenga",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 19,
-          name: "Vegard Forren",
-          team: "Molde",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 20,
-          name: "Frode Kippe",
-          team: "Lillestrøm",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 21,
-          name: "Sam Adekugbe",
-          team: "Vålerenga",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 22,
-          name: "Anders Konradsen",
-          team: "Rosenborg",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 23,
-          name: "Matti Lund Nielsen",
-          team: "Sarpsborg 08",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 24,
-          name: "Zoran Popovic",
-          team: "Bodø/Glimt",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 25,
-          name: "Vegar Eggen Hedenstad",
-          team: "Rosenborg",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 26,
-          name: "Samúel Fridjónsson",
-          team: "Vålerenga",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 27,
-          name: "Vegard Leikvoll Moberg",
-          team: "Bodø/Glimt",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 28,
-          name: "Harmeet Singh",
-          team: "Sarpsborg 08",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 29,
-          name: "Sean McDermott",
-          team: "Kristiansund BK",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 30,
-          name: "Ronnie Schwartz",
-          team: "Sarpsborg 08",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 31,
-          name: "Jonas Rønningen",
-          team: "Kristiansund BK",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        },
-        {
-          place: 32,
-          name: "Andreas Eines Hopmark",
-          team: "Kristiansund BK",
-          value1: 1,
-          value2: 2,
-          value3: 0.5,
-          updated: new Date(2018, 2, 21)
-        }
-      ],
-      obosligaen: [
-        {
-          place: 1,
-          name: "Gandhi",
-          team: "Fitjar",
-          value1: 3,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 22)
-        },
-        {
-          place: 2,
-          name: "Jackson Maine",
-          team: "Hamar",
-          value1: 4,
-          value2: 1,
-          value3: 1,
-          updated: new Date(2018, 2, 22)
-        }
-      ]
+      testData
     });
   }
 
   startFeed() {
-    this.sendData();
     setInterval(() => {
-      // TODO Bruk riktig endpoint, ikke testdata
-      // altomfotballScraper.getAllDangerzonePlayersForSockets(data => {
-      //   io.emit("data", data);
-      // });
-      console.log("Emitting data to clients");
-      this.sendData();
+      altomfotballScraper
+        .getYellowCardEvents("2018-03-11", "2018-03-18")
+        .then(data => {
+          console.log("Emitting data to clients");
+          this.io.emit("data", data);
+        })
+        .catch(err => {
+          console.log(`Error fetch yellow card events`, err);
+          this.io.emit("data", {});
+        });
     }, 10000);
   }
 }

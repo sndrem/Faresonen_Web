@@ -10,7 +10,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get("/", (req, res) => {
-	res.render("index", { title: "Express" });
+  res.render("index", { title: "Express" });
 });
 
 // router.get("/*", (req, res) => {
@@ -30,21 +30,21 @@ router.get("/", (req, res) => {
  * @apiParam {Number} seasonId (e.g 339 for Premier League in the season of 17/18)
  */
 router.get("/table/:tournamentId/:seasonId", (req, res) => {
-	const { tournamentId, seasonId } = req.params;
-	const url = `${constants.TABLE_URL}?start=${constants.START_LIMIT}&max=${
-		constants.MAX_LIMIT
-	}&tournamentId=${tournamentId}&seasonId=${seasonId}`;
-	axios
-		.get(url)
-		.then(data => {
-			res.json(data.data);
-		})
-		.catch(err => {
-			res.json({
-				error: `Could not get table for url: ${url}`,
-				errorMessage: err
-			});
-		});
+  const { tournamentId, seasonId } = req.params;
+  const url = `${constants.TABLE_URL}?start=${constants.START_LIMIT}&max=${
+    constants.MAX_LIMIT
+  }&tournamentId=${tournamentId}&seasonId=${seasonId}`;
+  axios
+    .get(url)
+    .then(data => {
+      res.json(data.data);
+    })
+    .catch(err => {
+      res.json({
+        error: `Could not get table for url: ${url}`,
+        errorMessage: err
+      });
+    });
 });
 
 /**
@@ -56,21 +56,21 @@ router.get("/table/:tournamentId/:seasonId", (req, res) => {
  * @apiParam {Number} seasonId (e.g 339 for Premier League in the season of 17/18)
  */
 router.get("/matches/:tournamentId/:seasonId", (req, res) => {
-	const { tournamentId, seasonId } = req.params;
-	const url = `${constants.MATCHES_URL}?start=${constants.START_LIMIT}&max=${
-		constants.MAX_LIMIT
-	}&tournamentId=${tournamentId}&seasonId=${seasonId}`;
-	axios
-		.get(url)
-		.then(data => {
-			res.json(data.data);
-		})
-		.catch(err => {
-			res.json({
-				error: `Could not get matches for ${url}`,
-				errorMessage: err
-			});
-		});
+  const { tournamentId, seasonId } = req.params;
+  const url = `${constants.MATCHES_URL}?start=${constants.START_LIMIT}&max=${
+    constants.MAX_LIMIT
+  }&tournamentId=${tournamentId}&seasonId=${seasonId}`;
+  axios
+    .get(url)
+    .then(data => {
+      res.json(data.data);
+    })
+    .catch(err => {
+      res.json({
+        error: `Could not get matches for ${url}`,
+        errorMessage: err
+      });
+    });
 });
 
 /**
@@ -82,21 +82,21 @@ router.get("/matches/:tournamentId/:seasonId", (req, res) => {
  * @apiParam {Number} seasonId (e.g 339 for Premier League in the season of 17/18)
  */
 router.get("/rounds/:tournamentId/:seasonId", (req, res) => {
-	const { tournamentId, seasonId } = req.params;
-	const url = `${constants.ROUNDS_URL}?start=${constants.START_LIMIT}&max=${
-		constants.MAX_LIMIT
-	}&tournamentId=${tournamentId}&seasonId=${seasonId}`;
-	axios
-		.get(url)
-		.then(data => {
-			res.json(data.data);
-		})
-		.catch(err => {
-			res.json({
-				error: `Could not get rounds for ${url}`,
-				errorMessage: err
-			});
-		});
+  const { tournamentId, seasonId } = req.params;
+  const url = `${constants.ROUNDS_URL}?start=${constants.START_LIMIT}&max=${
+    constants.MAX_LIMIT
+  }&tournamentId=${tournamentId}&seasonId=${seasonId}`;
+  axios
+    .get(url)
+    .then(data => {
+      res.json(data.data);
+    })
+    .catch(err => {
+      res.json({
+        error: `Could not get rounds for ${url}`,
+        errorMessage: err
+      });
+    });
 });
 
 /**
@@ -107,19 +107,19 @@ router.get("/rounds/:tournamentId/:seasonId", (req, res) => {
  * @apiParam {Number} roundId
  */
 router.get("/rounds/:roundId", (req, res) => {
-	const { roundId } = req.params;
-	const url = `${constants.SPECIFIC_ROUND_URL(roundId)}?start=${
-		constants.START_LIMIT
-	}&max=${constants.MAX_LIMIT}`;
-	axios
-		.get(url)
-		.then(data => res.json(data.data))
-		.catch(err => {
-			res.json({
-				error: `Could not get rounds for ${url}`,
-				errorMessage: err
-			});
-		});
+  const { roundId } = req.params;
+  const url = `${constants.SPECIFIC_ROUND_URL(roundId)}?start=${
+    constants.START_LIMIT
+  }&max=${constants.MAX_LIMIT}`;
+  axios
+    .get(url)
+    .then(data => res.json(data.data))
+    .catch(err => {
+      res.json({
+        error: `Could not get rounds for ${url}`,
+        errorMessage: err
+      });
+    });
 });
 
 /**
@@ -132,23 +132,23 @@ router.get("/rounds/:roundId", (req, res) => {
  * @apiParam {Number} teamId (e.g 740 for Tottenham)
  */
 router.get("/players/:tournamentId/:seasonId/:teamId", (req, res) => {
-	const { tournamentId, seasonId, teamId } = req.params;
-	const url = `${
-		constants.PLAYERS_URL
-	}?tournamentId=${tournamentId}&seasonId=${seasonId}&teamId=${teamId}&start=${
-		constants.START_LIMIT
-	}&max=${constants.MAX_LIMIT}`;
-	axios
-		.get(url)
-		.then(data => {
-			res.json(data.data);
-		})
-		.catch(err => {
-			res.json({
-				error: `Could not get players for url ${url}`,
-				errorMessage: err
-			});
-		});
+  const { tournamentId, seasonId, teamId } = req.params;
+  const url = `${
+    constants.PLAYERS_URL
+  }?tournamentId=${tournamentId}&seasonId=${seasonId}&teamId=${teamId}&start=${
+    constants.START_LIMIT
+  }&max=${constants.MAX_LIMIT}`;
+  axios
+    .get(url)
+    .then(data => {
+      res.json(data.data);
+    })
+    .catch(err => {
+      res.json({
+        error: `Could not get players for url ${url}`,
+        errorMessage: err
+      });
+    });
 });
 
 /**
@@ -159,12 +159,12 @@ router.get("/players/:tournamentId/:seasonId/:teamId", (req, res) => {
  * @apiParam {Number} tournamentId (e.g 230 for Premier League)
  */
 router.get(
-	"/statistics/yellowcards/:tournamentId",
-	altomfotballScraper.getYellowCards,
-	(req, res) => {
-		// console.log(res.players);
-		res.json({ data: res.players });
-	}
+  "/statistics/yellowcards/:tournamentId",
+  altomfotballScraper.getYellowCards,
+  (req, res) => {
+    // console.log(res.players);
+    res.json({ data: res.players });
+  }
 );
 
 /**
@@ -175,19 +175,19 @@ router.get(
  * @apiParam {Number} tournamentId (e.g 230 for Premier League)
  */
 router.get(
-	"/statistics/topscorers/:tournamentId",
-	altomfotballScraper.getTopScorers,
-	(req, res) => {
-		res.json({ data: res.players });
-	}
+  "/statistics/topscorers/:tournamentId",
+  altomfotballScraper.getTopScorers,
+  (req, res) => {
+    res.json({ data: res.players });
+  }
 );
 
 router.get(
-	"/statistics/allDangerzonePlayers",
-	altomfotballScraper.getAllDangerzonePlayers,
-	(req, res) => {
-		res.json(res.players);
-	}
+  "/statistics/allDangerzonePlayers",
+  altomfotballScraper.getAllDangerzonePlayers,
+  (req, res) => {
+    res.json(res.players);
+  }
 );
 
 module.exports = router;

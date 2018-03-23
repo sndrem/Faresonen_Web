@@ -18,6 +18,9 @@ function extractValues(tablerow, html) {
     .find("a")
     .eq(0)
     .text();
+
+  const id = extractId(tablerow, html);
+
   const team = html(tablerow)
     .children("td")
     .eq(2)
@@ -50,10 +53,28 @@ function extractValues(tablerow, html) {
     place,
     name,
     team,
+    id,
     value1,
     value2,
     value3
   };
+}
+
+function extractUrl(tablerow, html) {
+  return html(tablerow)
+    .children("td")
+    .eq(1)
+    .find("a")
+    .attr("href");
+}
+
+function extractId(tablerow, html) {
+  const idRegex = /(personId=(\d*))/g;
+  const url = extractUrl(tablerow, html);
+  const id = idRegex.exec(url);
+  if (id.length > 2) return parseInt(id[2], 10);
+
+  return -1;
 }
 
 function getStatistics(url, tournamentId) {
@@ -156,6 +177,34 @@ const scraper = {
           obosligaen: []
         });
       });
+  },
+
+  // http://api.tv2.no/sport/resources/events/?fromTime=2018-03-11&toTime=2018-03-18&max=100&sportId=1&tournamentId=1&eventtypes=2
+  getYellowCardEvents(fromTime, toTime) {
+    const urls = [
+      axios.get(
+        `http://api.tv2.no/sport/resources/events/?fromTime=${fromTime}&toTime=${toTime}&max=100&sportId=1&tournamentId=1&eventtypes=2`
+      ),
+      axios.get(
+        `http://api.tv2.no/sport/resources/events/?fromTime=${fromTime}&toTime=${toTime}&max=100&sportId=1&tournamentId=2&eventtypes=2`
+      )
+    ];
+
+    return new Promise((resolve, reject) => {
+      axios
+        .all(urls)
+        .then(
+          axios.spread((eliteserien, obosligaen) => {
+            resolve({
+              events: eliteserien.data.event.concat(obosligaen.data.event)
+            });
+          })
+        )
+        .catch(err => {
+          // console.log(err);
+          reject(err);
+        });
+    });
   }
 };
 
