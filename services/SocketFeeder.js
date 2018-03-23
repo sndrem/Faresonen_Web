@@ -1,4 +1,5 @@
 import altomfotballScraper from "../services/altomfotballScraper";
+import moment from "moment";
 
 const io = require("socket.io");
 
@@ -156,10 +157,25 @@ class SocketFeeder {
     });
   }
 
+  static getTomorrow() {
+    return moment()
+      .subtract(1, "days")
+      .format("YYYY-MM-DD");
+  }
+
+  static getYesterday() {
+    return moment()
+      .add(1, "days")
+      .format("YYYY-MM-DD");
+  }
+
   startFeed() {
     setInterval(() => {
+      const yesterday = SocketFeeder.getYesterday();
+      const tomorrow = SocketFeeder.getTomorrow();
+
       altomfotballScraper
-        .getYellowCardEvents("2018-03-11", "2018-03-18")
+        .getYellowCardEvents(yesterday, tomorrow)
         .then(data => {
           console.log("Emitting data to clients");
           this.io.emit("data", data);

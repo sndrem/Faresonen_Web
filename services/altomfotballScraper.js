@@ -195,9 +195,23 @@ const scraper = {
         .all(urls)
         .then(
           axios.spread((eliteserien, obosligaen) => {
-            resolve({
-              events: eliteserien.data.event.concat(obosligaen.data.event)
-            });
+            if (eliteserien.data.event) {
+              resolve({
+                events: eliteserien.data.event
+              });
+            } else if (obosligaen.data.event) {
+              resolve({
+                events: obosligaen.data.event
+              });
+            } else if (eliteserien.data.event && obosligaen.data.event) {
+              resolve({
+                events: eliteserien.data.event.concat(obosligaen.data.event)
+              });
+            } else {
+              resolve({
+                events: []
+              });
+            }
           })
         )
         .catch(err => {
