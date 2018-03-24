@@ -1,18 +1,41 @@
-import altomfotballScraper from "../services/altomfotballScraper";
 import moment from "moment";
+import altomfotballScraper from "../services/altomfotballScraper";
 
 const io = require("socket.io");
 
 class SocketFeeder {
   constructor(server) {
     console.log("Setting up socket-feeder");
-    this.io = io(server);
-    this.sendData();
+    this.io = io(server, {
+      pingInterval: 10000,
+      pingTimeout: 5000
+    });
+    this.connectedUsers = [];
+    this.connection();
+    this.interval = null;
   }
 
   connection() {
-    this.io.on("connection", socket => {
+    this.io.sockets.on("connection", socket => {
       console.log("A new user connected");
+      this.connectedUsers.push(socket);
+      console.log(
+        `Number of connected users are ${this.connectedUsers.length}`
+      );
+      this.startTestFeed();
+
+      socket.on("disconnect", () => {
+        console.log("User disconnected");
+        const index = this.connectedUsers.indexOf(socket);
+        this.connectedUsers.splice(index, 1);
+        console.log(
+          `Number of connected users are: ${this.connectedUsers.length}`
+        );
+        if (this.connectedUsers.length <= 0) {
+          console.log("No users left, clearing interval");
+          clearInterval(this.interval);
+        }
+      });
     });
   }
 
@@ -189,10 +212,13 @@ class SocketFeeder {
 
   startTestFeed() {
     const data = altomfotballScraper.getTestEvents();
-    setInterval(() => {
-      console.log("Emitting test data");
-      this.io.emit("data", { events: data });
-    }, 5000);
+    if (this.connectedUsers.length > 0) {
+      if (this.interval) clearInterval(this.interval);
+      this.interval = setInterval(() => {
+        console.log("Emitting test data");
+        this.io.emit("data", { events: data });
+      }, 5000);
+    }
   }
 }
 
