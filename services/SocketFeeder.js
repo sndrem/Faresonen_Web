@@ -11,8 +11,8 @@ class SocketFeeder {
       pingTimeout: 5000
     });
     this.connectedUsers = [];
-    this.connection();
     this.interval = null;
+    this.connection();
   }
 
   connection() {
@@ -22,7 +22,8 @@ class SocketFeeder {
       console.log(
         `Number of connected users are ${this.connectedUsers.length}`
       );
-      this.startTestFeed();
+
+      this.startFeed();
 
       socket.on("disconnect", () => {
         console.log("User disconnected");
@@ -193,25 +194,32 @@ class SocketFeeder {
   }
 
   startFeed() {
-    setInterval(() => {
+    if (this.interval) clearInterval(this.interval);
+
+    if (this.connectedUsers.length > 0) {
+      if (this.interval) clearInterval(this.interval);
+
       const yesterday = SocketFeeder.getYesterday();
       const tomorrow = SocketFeeder.getTomorrow();
 
-      altomfotballScraper
-        .getYellowCardEvents(yesterday, tomorrow)
-        .then(data => {
-          console.log("Emitting data to clients");
-          this.io.emit("data", data);
-        })
-        .catch(err => {
-          console.log(`Error fetch yellow card events`, err);
-          this.io.emit("data", {});
-        });
-    }, 10000);
+      this.interval = setInterval(() => {
+        altomfotballScraper
+          .getYellowCardEvents(yesterday, tomorrow)
+          .then(data => {
+            console.log("Emitting data to clients");
+            this.io.emit("data", data);
+          })
+          .catch(err => {
+            console.log(`Error fetch yellow card events`, err);
+            this.io.emit("data", {});
+          });
+      }, 10000);
+    }
   }
 
   startTestFeed() {
     const data = altomfotballScraper.getTestEvents();
+    this.io.emit("data", { events: data });
     if (this.connectedUsers.length > 0) {
       if (this.interval) clearInterval(this.interval);
       this.interval = setInterval(() => {

@@ -99,7 +99,7 @@ function getStatistics(url, tournamentId) {
 }
 
 function isInDangerzone(player) {
-  return player.value1 > 0 && player.value1 % 2 !== 0;
+  return player.value1 > 0 && player.value1 % 2 === 0;
 }
 
 function filterDangerzonePlayers(players) {
@@ -140,8 +140,16 @@ const scraper = {
       .then(
         axios.spread((eliteserien, obosligaen) => {
           res.players = {
-            eliteserien: filterDangerzonePlayers(eliteserien),
-            obosligaen: filterDangerzonePlayers(obosligaen)
+            eliteserien: filterDangerzonePlayers(eliteserien).map(p => {
+              const player = p;
+              player.league = "eliteserien";
+              return player;
+            }),
+            obosligaen: filterDangerzonePlayers(obosligaen).map(p => {
+              const player = p;
+              player.league = "obosligaen";
+              return player;
+            })
           };
           next();
         })
@@ -340,6 +348,30 @@ const scraper = {
         nifsId: "8631530",
         person1: {
           "@uri": "http://api.tv2.no/sport/resources/people/291489/"
+        },
+        realTime: "2018-03-18T21:24:57+01:00",
+        team: {
+          "@uri": "http://api.tv2.no/sport/resources/teams/314/"
+        }
+      },
+      {
+        "@uri": "http://api.tv2.no/sport/resources/events/15222908/",
+        eventtype: {
+          "@uri": "http://api.tv2.no/sport/resources/eventtypes/2/"
+        },
+        eventtime: "65",
+        extendedeventtype: {
+          "@uri": "http://api.tv2.no/sport/resources/extendedeventtypes/1200/"
+        },
+        goalsTeamA: "2",
+        goalsTeamB: "1",
+        id: "15222908",
+        match: {
+          "@uri": "http://api.tv2.no/sport/resources/matches/912487/"
+        },
+        nifsId: "8631530",
+        person1: {
+          "@uri": "http://api.tv2.no/sport/resources/people/241363/"
         },
         realTime: "2018-03-18T21:24:57+01:00",
         team: {
