@@ -24,6 +24,7 @@ class SocketFeeder {
       );
 
       this.startFeed();
+      // this.startTestFeed();
 
       socket.on("disconnect", () => {
         console.log("User disconnected");
