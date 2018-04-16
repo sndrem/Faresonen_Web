@@ -255,6 +255,29 @@ const scraper = {
         }
       },
       {
+        "@uri": "http://api.tv2.no/sport/resources/events/15221417/",
+        eventtype: {
+          "@uri": "http://api.tv2.no/sport/resources/eventtypes/2/"
+        },
+        eventtime: "41",
+        extendedeventtype: {
+          "@uri": "http://api.tv2.no/sport/resources/extendedeventtypes/1200/"
+        },
+        goalsTeamA: "1",
+        goalsTeamB: "0",
+        id: "15221417",
+        match: {
+          "@uri": "http://api.tv2.no/sport/resources/matches/912485/"
+        },
+        person1: {
+          "@uri": "http://api.tv2.no/sport/resources/people/195587/"
+        },
+        realTime: "2018-04-15T18:46:57+01:00",
+        team: {
+          "@uri": "http://api.tv2.no/sport/resources/teams/307/"
+        }
+      },
+      {
         "@uri": "http://api.tv2.no/sport/resources/events/15222082/",
         enetpulseId: "5491684",
         eventMin: "84",
