@@ -2,80 +2,7 @@ const request = require("request");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const constants = require("../constants/constants").default;
-
-function extractValues(tablerow, html) {
-  const place = parseInt(
-    html(tablerow)
-      .children("td")
-      .eq(0)
-      .text()
-      .replace(".", ""),
-    10
-  );
-  const name = html(tablerow)
-    .children("td")
-    .eq(1)
-    .find("a")
-    .eq(0)
-    .text();
-
-  const id = extractId(tablerow, html);
-
-  const team = html(tablerow)
-    .children("td")
-    .eq(2)
-    .find("a")
-    .eq(0)
-    .text();
-  const value1 = parseInt(
-    html(tablerow)
-      .children("td")
-      .eq(3)
-      .text(),
-    10
-  );
-  const value2 = parseInt(
-    html(tablerow)
-      .children("td")
-      .eq(4)
-      .text(),
-    10
-  );
-  const value3 = parseFloat(
-    html(tablerow)
-      .children("td")
-      .eq(5)
-      .text()
-      .replace(",", ".")
-  );
-
-  return {
-    place,
-    name,
-    team,
-    id,
-    value1,
-    value2,
-    value3
-  };
-}
-
-function extractUrl(tablerow, html) {
-  return html(tablerow)
-    .children("td")
-    .eq(1)
-    .find("a")
-    .attr("href");
-}
-
-function extractId(tablerow, html) {
-  const idRegex = /(personId=(\d*))/g;
-  const url = extractUrl(tablerow, html);
-  const id = idRegex.exec(url);
-  if (id.length > 2) return parseInt(id[2], 10);
-
-  return -1;
-}
+const tools = require("../tools/scraperTools").default;
 
 function getStatistics(url, tournamentId) {
   return new Promise((resolve, reject) => {
@@ -90,20 +17,12 @@ function getStatistics(url, tournamentId) {
       const $ = cheerio.load(html);
       const players = [];
       $("table tbody tr").each((i, elem) => {
-        const playerData = extractValues(elem, $);
+        const playerData = tools.extractValues(elem, $);
         players.push(playerData);
       });
       resolve(players);
     });
   });
-}
-
-function isInDangerzone(player) {
-  return player.value1 > 0 && player.value1 % 2 === 0;
-}
-
-function filterDangerzonePlayers(players) {
-  return players.filter(p => isInDangerzone(p));
 }
 
 const scraper = {
@@ -140,12 +59,12 @@ const scraper = {
       .then(
         axios.spread((eliteserien, obosligaen) => {
           res.players = {
-            eliteserien: filterDangerzonePlayers(eliteserien).map(p => {
+            eliteserien: tools.filterDangerzonePlayers(eliteserien).map(p => {
               const player = p;
               player.league = "eliteserien";
               return player;
             }),
-            obosligaen: filterDangerzonePlayers(obosligaen).map(p => {
+            obosligaen: tools.filterDangerzonePlayers(obosligaen).map(p => {
               const player = p;
               player.league = "obosligaen";
               return player;
