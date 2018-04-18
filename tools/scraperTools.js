@@ -75,8 +75,6 @@ const tools = {
     // https://www.fotball.no/globalassets/regler-og-retningslinjer/turneringsbestemmelser/turneringsbestemmelser-obos-ligaen.pdf
     if (player.value1 < 4 || player.value1 === 0) {
       return false;
-    } else if (player.value1 === 4 || player.value1 === 6) {
-      return true;
     } else if (player.value1 % 2 === 0) {
       return true;
     }
