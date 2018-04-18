@@ -93,8 +93,8 @@ const scraper = {
       .then(
         axios.spread((eliteserien, obosligaen) => {
           cb({
-            eliteserien: filterDangerzonePlayers(eliteserien),
-            obosligaen: filterDangerzonePlayers(obosligaen)
+            eliteserien: tools.filterDangerzonePlayers(eliteserien),
+            obosligaen: tools.filterDangerzonePlayers(obosligaen)
           });
         })
       )
