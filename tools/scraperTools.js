@@ -73,12 +73,9 @@ const tools = {
   isInDangerZone: function(player) {
     // https://www.fotball.no/globalassets/regler-og-retningslinjer/turneringsbestemmelser/turneringsbestemmelser-eliteserien.pdf
     // https://www.fotball.no/globalassets/regler-og-retningslinjer/turneringsbestemmelser/turneringsbestemmelser-obos-ligaen.pdf
-    if (player.value1 < 4 || player.value1 === 0) {
-      return false;
-    } else if (player.value1 % 2 === 0) {
+    if (player.value1 === 3 || (player.value1 % 2 !== 0 && player.value1 > 2)) {
       return true;
     }
-
     return false;
   },
   filterDangerzonePlayers: function(players) {
