@@ -184,13 +184,13 @@ class SocketFeeder {
 
   static getTomorrow() {
     return moment()
-      .subtract(1, "days")
+      .add(1, "days")
       .format("YYYY-MM-DD");
   }
 
   static getYesterday() {
     return moment()
-      .add(1, "days")
+      .subtract(1, "days")
       .format("YYYY-MM-DD");
   }
 
@@ -208,6 +208,7 @@ class SocketFeeder {
           .getYellowCardEvents(yesterday, tomorrow)
           .then(data => {
             console.log("Emitting data to clients");
+            console.log(data);
             this.io.emit("data", data);
           })
           .catch(err => {

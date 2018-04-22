@@ -108,6 +108,9 @@ const scraper = {
 
   // http://api.tv2.no/sport/resources/events/?fromTime=2018-03-11&toTime=2018-03-18&max=100&sportId=1&tournamentId=1&eventtypes=2
   getYellowCardEvents(fromTime, toTime) {
+    console.log(
+      `http://api.tv2.no/sport/resources/events/?fromTime=${fromTime}&toTime=${toTime}&max=100&sportId=1&tournamentId=1&eventtypes=2`
+    );
     const urls = [
       axios.get(
         `http://api.tv2.no/sport/resources/events/?fromTime=${fromTime}&toTime=${toTime}&max=100&sportId=1&tournamentId=1&eventtypes=2`
@@ -122,6 +125,7 @@ const scraper = {
         .all(urls)
         .then(
           axios.spread((eliteserien, obosligaen) => {
+            console.log(eliteserien.data);
             if (eliteserien.data.event) {
               resolve({
                 events: eliteserien.data.event
