@@ -125,7 +125,6 @@ const scraper = {
         .all(urls)
         .then(
           axios.spread((eliteserien, obosligaen) => {
-            console.log(eliteserien.data);
             if (eliteserien.data.event) {
               resolve({
                 events: eliteserien.data.event

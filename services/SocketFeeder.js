@@ -183,15 +183,23 @@ class SocketFeeder {
   }
 
   static getTomorrow() {
-    return moment()
-      .add(1, "days")
-      .format("YYYY-MM-DD");
+    const now = moment();
+    const month = now.month() + 1;
+    const year = now.year();
+    const day = now.date() - 1;
+    return `${year}-${month > 10 ? month : "0" + month}-${
+      day > 10 ? day : "0" + day
+    }`;
   }
 
   static getYesterday() {
-    return moment()
-      .subtract(1, "days")
-      .format("YYYY-MM-DD");
+    const now = moment();
+    const month = now.month() + 1;
+    const year = now.year();
+    const day = now.date() - 3;
+    return `${year}-${month > 10 ? month : "0" + month}-${
+      day > 10 ? day : "0" + day
+    }`;
   }
 
   startFeed() {
@@ -208,7 +216,6 @@ class SocketFeeder {
           .getYellowCardEvents(yesterday, tomorrow)
           .then(data => {
             console.log("Emitting data to clients");
-            console.log(data);
             this.io.emit("data", data);
           })
           .catch(err => {
