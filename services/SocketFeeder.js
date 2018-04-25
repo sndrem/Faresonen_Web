@@ -182,21 +182,16 @@ class SocketFeeder {
     });
   }
 
-  static getTomorrow() {
-    const now = moment();
-    const month = now.month() + 1;
+  static getYesterday() {
+    const now = moment().subtract(1, "days");
+    now.add(1, "month");
+    const month = now.month();
     const year = now.year();
-    const day = now.date() - 1;
-    return `${year}-${month > 10 ? month : "0" + month}-${
-      day > 10 ? day : "0" + day
-    }`;
+    const day = now.date();
+    return SocketFeeder.formatDateString(year, month, day);
   }
 
-  static getYesterday() {
-    const now = moment();
-    const month = now.month() + 1;
-    const year = now.year();
-    const day = now.date() - 3;
+  static formatDateString(year, month, day) {
     return `${year}-${month > 10 ? month : "0" + month}-${
       day > 10 ? day : "0" + day
     }`;
@@ -209,11 +204,10 @@ class SocketFeeder {
       if (this.interval) clearInterval(this.interval);
 
       const yesterday = SocketFeeder.getYesterday();
-      const tomorrow = SocketFeeder.getTomorrow();
 
       this.interval = setInterval(() => {
         altomfotballScraper
-          .getYellowCardEvents(yesterday, tomorrow)
+          .getYellowCardEvents(yesterday)
           .then(data => {
             console.log("Emitting data to clients");
             this.io.emit("data", data);

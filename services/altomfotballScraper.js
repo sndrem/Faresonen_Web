@@ -106,18 +106,10 @@ const scraper = {
       });
   },
 
-  // http://api.tv2.no/sport/resources/events/?fromTime=2018-03-11&toTime=2018-03-18&max=100&sportId=1&tournamentId=1&eventtypes=2
-  getYellowCardEvents(fromTime, toTime) {
-    console.log(
-      `http://api.tv2.no/sport/resources/events/?fromTime=${fromTime}&toTime=${toTime}&max=100&sportId=1&tournamentId=1&eventtypes=2`
-    );
+  getYellowCardEvents(fromTime) {
     const urls = [
-      axios.get(
-        `http://api.tv2.no/sport/resources/events/?fromTime=${fromTime}&toTime=${toTime}&max=100&sportId=1&tournamentId=1&eventtypes=2`
-      ),
-      axios.get(
-        `http://api.tv2.no/sport/resources/events/?fromTime=${fromTime}&toTime=${toTime}&max=100&sportId=1&tournamentId=2&eventtypes=2`
-      )
+      axios.get(this.formatYellowCardEndpoint(fromTime, 1)),
+      axios.get(this.formatYellowCardEndpoint(fromTime, 2))
     ];
 
     return new Promise((resolve, reject) => {
@@ -149,6 +141,10 @@ const scraper = {
           reject(err);
         });
     });
+  },
+
+  formatYellowCardEndpoint(fromTime, tournamentId) {
+    return `http://api.tv2.no/sport/resources/events/?fromTime=${fromTime}&max=100&sportId=1&tournamentId=${tournamentId}&eventtypes=2`;
   },
 
   getTestEvents() {
