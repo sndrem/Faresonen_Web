@@ -192,8 +192,8 @@ class SocketFeeder {
   }
 
   static formatDateString(year, month, day) {
-    return `${year}-${month > 10 ? month : "0" + month}-${
-      day > 10 ? day : "0" + day
+    return `${year}-${month >= 10 ? month : "0" + month}-${
+      day >= 10 ? day : "0" + day
     }`;
   }
 
