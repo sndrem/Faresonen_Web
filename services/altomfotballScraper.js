@@ -147,6 +147,21 @@ const scraper = {
     return `http://api.tv2.no/sport/resources/events/?fromTime=${fromTime}&max=100&sportId=1&tournamentId=${tournamentId}&eventtypes=2`;
   },
 
+  getAllLeagues(max = 1500, sportId = 1, filterImportant = "feed") {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(
+          `http://api.tv2.no/sport/resources/tournaments?sportId=${sportId}&max=${max}&filterImportant=${filterImportant}`
+        )
+        .then(data => {
+          resolve(data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
+
   getTestEvents() {
     return [
       {

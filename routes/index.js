@@ -190,4 +190,17 @@ router.get(
   }
 );
 
+router.post("/leagues/all", (req, res) => {
+  const { max, sportId, filterImportant } = req.body;
+  altomfotballScraper
+    .getAllLeagues(max, sportId, filterImportant)
+    .then(data => {
+      res.status(200).json(data.data);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(404).json({ error: "Could not get leagues" });
+    });
+});
+
 module.exports = router;
