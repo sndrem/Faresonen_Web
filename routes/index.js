@@ -1,7 +1,5 @@
-console.log("Index.js");
 const express = require("express");
 
-console.log("Required express");
 const axios = require("axios");
 
 const constants = require("../constants/constants.js").default;
