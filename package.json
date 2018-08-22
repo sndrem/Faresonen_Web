@@ -6,8 +6,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node ./bin/www",
     "raspberry": "babel-node ./bin/www",
-    "deploy":
-      "sshpass -f ~/piePwd.txt scp -rpv . pi@192.168.1.61:/home/pi/documents/Faresonen_Web",
+    "deploy": "sshpass -f ~/piePwd.txt scp -rpv . pi@192.168.1.61:/home/pi/documents/Faresonen_Web",
     "test": "jest --watchAll",
     "test:coverage": "nyc npm test",
     "test:unit": "mocha --recursive test/middleware test/models test/routes",
@@ -23,7 +22,6 @@
     "jade": "^1.11.0",
     "moment": "^2.21.0",
     "morgan": "^1.6.1",
-    "request": "^2.83.0",
     "serve-favicon": "^2.3.0",
     "socket.io": "^2.0.4"
   },
@@ -34,15 +32,15 @@
     "babel-preset-env": "^1.6.1",
     "chai": "^3.5.0",
     "debug": "^2.2.0",
-    "grunt": "^1.0.1",
+    "grunt": "^1.0.3",
     "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0",
+    "grunt-contrib-watch": "^1.1.0",
     "grunt-develop": "^0.4.0",
     "load-grunt-tasks": "^3.2.0",
     "mocha": "^4.0.1",
     "nyc": "^10.0.0",
     "regenerator-runtime": "^0.11.1",
-    "request": "^2.60.0",
+    "request": "^2.88.0",
     "supertest": "^2.0.0",
     "time-grunt": "^1.2.1"
   },
