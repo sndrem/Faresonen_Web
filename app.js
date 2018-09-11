@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("path");
 const favicon = require("serve-favicon"); //    eslint-disable-line no-unused-vars
-const logger = require("morgan");
+const morgan = require("morgan");
+const winston = require("./config/winston");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
@@ -22,7 +23,7 @@ app.set("views", path.join(__dirname, "build"));
 app.set("view engine", "jade");
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
-app.use(logger("dev"));
+app.use(morgan("combined", { stream: winston.stream }));
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -49,6 +50,11 @@ app.use((req, res, next) => {
 if (app.get("env") === "development") {
   app.use((err, req, res, next) => {
     //  eslint-disable-line no-unused-vars
+    winston.error(
+      `${err.status || 500} - ${err.message} - ${req.originalUrl} - ${
+        req.method
+      } - ${req.ip}`
+    );
     res.status(err.status || 500);
     res.render("error", {
       message: err.message,
@@ -62,6 +68,12 @@ if (app.get("env") === "development") {
 // no stacktraces leaked to user
 app.use((err, req, res, next) => {
   //   eslint-disable-line no-unused-vars
+
+  winston.error(
+    `${err.status || 500} - ${err.message} - ${req.originalUrl} - ${
+      req.method
+    } - ${req.ip}`
+  );
   res.status(err.status || 500);
   res.render("error", {
     message: err.message,
