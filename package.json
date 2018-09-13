@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node ./bin/www",
     "raspberry": "babel-node ./bin/www",
-    "deploy": "sshpass -f ~/piePwd.txt scp -rpv . pi@192.168.1.61:/home/pi/documents/Faresonen_Web",
+    "deploy": "sshpass -f ~/.piePwd.txt scp -r build pi@192.168.1.57:/home/pi/documents/Faresonen_Web",
     "test": "jest --watchAll",
     "test:coverage": "nyc npm test",
     "test:unit": "mocha --recursive test/middleware test/models test/routes",
