@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+import app from "../build/app";
+import SocketFeeder from "../build/services/SocketFeeder";
+
+const http = require("http").Server(app);
+
+app.set("port", process.env.PORT || 8000);
+
+const server = app.listen(app.get("port"), () => {
+  console.log(`Express server listening on port ${server.address().port}`);
+});
+
+const feeder = new SocketFeeder(server);
