@@ -1,15 +1,24 @@
 #!/usr/bin/env node
-import app from "../app";
-import SocketFeeder from "../services/SocketFeeder";
+"use strict";
 
-const http = require("http").Server(app);
+var _app = require("../build/app");
 
-app.set("port", process.env.PORT || 8000);
+var _app2 = _interopRequireDefault(_app);
 
-const server = app.listen(app.get("port"), () => {
-  console.log(`Express server listening on port ${server.address().port}`);
+var _SocketFeeder = require("../build/services/SocketFeeder");
+
+var _SocketFeeder2 = _interopRequireDefault(_SocketFeeder);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var http = require("http").Server(_app2.default);
+
+_app2.default.set("port", process.env.PORT || 8000);
+
+var server = _app2.default.listen(_app2.default.get("port"), function () {
+  console.log("Express server listening on port " + server.address().port);
 });
 
-const feeder = new SocketFeeder(server);
-// feeder.startFeed();
-// feeder.startTestFeed();
+var feeder = new _SocketFeeder2.default(server);
+
+//# sourceMappingURL=www.map

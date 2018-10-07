@@ -4,7 +4,12 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "babel-node ./bin/www",
+    "start": "node ./bin/www",
+    "start:dev": "babel-node ./bin/www",
+    "clean": "rm -rf build bin && mkdir build bin",
+    "build_entry_point": "babel -o ./bin/www ./src/bin/www -s",
+    "build-babel": "babel -d ./build ./src -s && npm run build_entry_point",
+    "build": "npm run clean && npm run build-babel",
     "raspberry": "babel-node ./bin/www",
     "deploy": "sshpass -f ~/.piePwd.txt scp -r build pi@192.168.1.57:/home/pi/documents/Faresonen_Web",
     "test": "jest --watchAll",

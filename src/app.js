@@ -15,11 +15,11 @@ const env = process.env.NODE_ENV || "development";
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == "development"; // eslint-disable-line eqeqeq
 
-app.use(express.static(path.join(__dirname, "/build")));
+app.use(express.static(path.join(__dirname, "./../frontend/build")));
 
 // view engine setup
 
-app.set("views", path.join(__dirname, "build"));
+app.set("views", path.join(__dirname, "../src/views"));
 app.set("view engine", "jade");
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
