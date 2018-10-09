@@ -15,7 +15,7 @@ const env = process.env.NODE_ENV || "development";
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == "development"; // eslint-disable-line eqeqeq
 
-app.use(express.static(path.join(__dirname, "./static/")));
+app.use(express.static(path.join(__dirname, "../static/")));
 
 // view engine setup
 
@@ -31,7 +31,7 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../static/")));
 
 app.use("/", routes);
 app.use("/fantasy", fantasyPl);
