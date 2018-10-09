@@ -17,7 +17,7 @@ var env = process.env.NODE_ENV || "development";
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == "development"; // eslint-disable-line eqeqeq
 
-app.use(express.static(path.join(__dirname, "./../frontend/build")));
+app.use(express.static(path.join(__dirname, "./../frontend/build/")));
 
 // view engine setup
 
