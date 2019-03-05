@@ -11,17 +11,6 @@ var altomfotballScraper = require("../services/altomfotballScraper").default;
 var router = express.Router();
 
 /* GET home page. */
-router.get("/", function (req, res) {
-  res.render("index", { title: "Express" });
-});
-
-// router.get("/*", (req, res) => {
-// 	res.sendFile(path.join(__dirname), "build/index.html", err => {
-// 		if (err) {
-// 			res.status(500).send(err);
-// 		}
-// 	});
-// });
 
 /**
  * @api {get} /table/:tournamentId/:seasonId Get table for a given tournament and season

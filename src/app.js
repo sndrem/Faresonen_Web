@@ -15,12 +15,16 @@ const env = process.env.NODE_ENV || "development";
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == "development"; // eslint-disable-line eqeqeq
 
-app.use(express.static(path.join(__dirname, "../static/")));
-
 // view engine setup
 
+app.use(express.static(path.join(__dirname, "../public")));
+
 app.set("views", path.join(__dirname, "../src/views"));
-app.set("view engine", "jade");
+app.set("view engine", "pug");
+
+app.get("/", function(req, res) {
+  res.render("index");
+});
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(morgan("combined", { stream: winston.stream }));
@@ -31,7 +35,6 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "../static/")));
 
 app.use("/", routes);
 app.use("/fantasy", fantasyPl);
